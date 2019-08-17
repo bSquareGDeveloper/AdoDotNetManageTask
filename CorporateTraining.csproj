@@ -1880,6 +1880,16 @@
   <ItemGroup>
     <Folder Include="Models\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessObjectLayer\BusinessObjectLayer.csproj">
+      <Project>{b57722b6-cde1-4521-969d-b149a8b5e333}</Project>
+      <Name>BusinessObjectLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PropertyObjects\PropertyObjects.csproj">
+      <Project>{ac8775ac-1eda-4940-a87f-849feb95f21a}</Project>
+      <Name>PropertyObjects</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

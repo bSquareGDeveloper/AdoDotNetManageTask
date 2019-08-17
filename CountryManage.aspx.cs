@@ -12,57 +12,52 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 
+using BusinessObjectLayer;
+using PropertyObjects;
+
 namespace CorporateTraining
 {
     public partial class CountryManage : System.Web.UI.Page
     {
-        SqlConnection conn;
+        CountryMaster fields = new CountryMaster();
+        CountryBusinessLogic CountryObj = new CountryBusinessLogic();
+        //        SqlConnection conn;
         protected void Page_Load(object sender, EventArgs e)
         {
             lblMessage.Visible = false;
-            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["connStr"].ConnectionString);
+            //conn = new SqlConnection(ConfigurationManager.ConnectionStrings["connStr"].ConnectionString);
 
-            if(!IsPostBack)
+            if (!IsPostBack)
             {
                 LoadData();
             }
 
         }
-        public void LoadData() {
+        public void LoadData()
+        {
 
-            SqlDataAdapter adp = new SqlDataAdapter("Select * from CountryMaster", conn);
-            DataTable dt = new DataTable();
-            adp.Fill(dt);
+            //SqlDataAdapter adp = new SqlDataAdapter("Select * from CountryMaster", conn);
+            //DataTable dt = new DataTable();
+            //adp.Fill(dt);
 
-            gridCountry.DataSource = dt;
-            gridCountry.DataBind();
+            //gridCountry.DataSource = dt;
+            //gridCountry.DataBind();
 
         }
         protected void btnSave_Click(object sender, EventArgs e)
         {
             lblMessage.Visible = true;
-            try
-            {
-                conn.Open();
-                SqlCommand command = new SqlCommand("CountryInsert", conn);
-                command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.AddWithValue("@CName", txtCountryName.Text);
-                command.Parameters.AddWithValue("@CCode", txtCountryCode.Text);
-                command.Parameters.AddWithValue("@IsE", isEnabled.Checked==true?1:0);
-                command.ExecuteNonQuery();
-                lblMessage.InnerText = "Country Details Saved!";
-                LoadData();
-            }
-            catch (Exception ex)
+            fields = new CountryMaster()
             {
-                lblMessage.InnerText = "Error:" + ex.Message;
-                
-            }
-            finally
-            {
-                conn.Close();
-            }
+                _CountryCode = txtCountryCode.Text,
+                _CountryName = txtCountryName.Text,
+                _IsCountryEnabled = isEnabled.Checked
+            };
+            lblMessage.InnerText = CountryObj.AddCountry(fields);
+
+            LoadData();
+
         }
     }
 }
