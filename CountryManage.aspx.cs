@@ -52,7 +52,7 @@ namespace CorporateTraining
                 command.Parameters.AddWithValue("@IsE", isEnabled.Checked==true?1:0);
                 command.ExecuteNonQuery();
                 lblMessage.InnerText = "Country Details Saved!";
-
+                LoadData();
             }
             catch (Exception ex)
             {
